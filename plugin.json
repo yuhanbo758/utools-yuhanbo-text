@@ -1,0 +1,43 @@
+{
+  "pluginName": "余汉波文本片段助手",
+  "description": "快速搜索Markdown文件并直接插入内容到当前输入框",
+  "version": "1.0.0",
+  "author": "余汉波",
+  "main": "index.html",
+  "logo": "logo.png",
+  "preload": "preload.js",
+  "features": [
+    {
+      "code": "text-snippets",
+      "explain": "超级文本片段 - 浏览和管理",
+      "cmds": [
+        "余汉波文本片段助手",
+        "文本片段助手",
+        "文本片段",
+        "超级文本",
+        "关键字上屏",
+        "自动上屏",
+        "文本片段管理"
+      ],
+      "icon": "logo.png",
+      "platform": ["win32", "darwin", "linux"],
+      "mode": "none"
+    },
+    {
+      "code": "settings",
+      "explain": "文本片段设置",
+      "cmds": [
+        "文本片段设置",
+        "片段设置"
+      ],
+      "mode": "none"
+    }
+  ],
+  "development": {
+    "main": "index.html"
+  },
+  "pluginSetting": {
+    "height": 600,
+    "single": true
+  }
+} 
