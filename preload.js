@@ -22,9 +22,9 @@ function insertContent(content, insertMode = 'plain') {
         utools.hideMainWindow();
         console.log('窗口已隐藏');
         
+        // 2. 复制内容到剪贴板
         if (insertMode === 'plain') {
             utools.copyText(content);
-            utools.simulateKeyboardTap('v', 'ctrl');
         } else if (insertMode === 'markdown') {
             // 添加markdown格式的特殊处理
             let formattedContent = content;
@@ -37,10 +37,8 @@ function insertContent(content, insertMode = 'plain') {
                 }
             }
             utools.copyText(formattedContent);
-            utools.simulateKeyboardTap('v', 'ctrl');
         } else {
             utools.copyText(content);
-            utools.simulateKeyboardTap('v', 'ctrl');
         }
         
         // 3. 在隐藏窗口后延时执行，确保界面退出
@@ -248,7 +246,16 @@ function handleDynamicFeature(code) {
         // 查找对应的片段
         const snippet = snippetsCache.find(s => s.fileName === fileName);
         if (snippet) {
-            insertContent(snippet.content);
+            // 获取用户设置，决定是否自动插入
+            const settings = getSettings();
+            if (settings.autoInsert) {
+                insertContent(snippet.content);
+            } else {
+                // 如果不自动插入，只复制到剪贴板
+                utools.copyText(snippet.content);
+                utools.showNotification('已复制到剪贴板');
+                utools.outPlugin();
+            }
             return true;
         } else {
             console.error(`找不到对应的片段: ${fileName}`);
@@ -332,7 +339,15 @@ window.exports = {
             },
             select: (action, itemData) => {
                 // 当选择某一项时，插入内容
-                insertContent(itemData.content);
+                const settings = getSettings();
+                if (settings.autoInsert) {
+                    insertContent(itemData.content);
+                } else {
+                    // 如果不自动插入，只复制到剪贴板
+                    utools.copyText(itemData.content);
+                    utools.showNotification('已复制到剪贴板');
+                    utools.outPlugin();
+                }
             }
         }
     },
